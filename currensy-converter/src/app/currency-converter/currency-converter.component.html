@@ -1,0 +1,32 @@
+<div class="wraper">
+    <div class='converter__container'>
+        <div class="header">
+            <h2 class="title">Currency Converter</h2>
+        </div>
+        <div class='currency__box'>
+            <div class="select__box">
+              <img id="imgFrom" src="https://countryflagsapi.com/png/ae" alt="United Arab Emirates flag"/>
+              <select (change)="onChangeSelectFrom($event)" id='corrency__slect-from' class="corrency__slect-from">
+                <option [selected]="item.ccy == 'USD'" value='{{ item.ccy }}' *ngFor="let item of list">
+                  {{ item.ccy }}
+                </option>
+              </select>
+            </div>
+            <input [(ngModel)]="valueFrom" (input)="onChangeInputFrom($event)" id='corrency__input-from' class="corrency__input-from" type="number"/>
+        </div>
+        <div class='btn-container'>
+            <button (click)="changeCurrensy()" id="btn__change" class='btn__change'>CH</button>
+        </div>
+        <div class='currency__box'>
+            <div class="select__box">
+                <img id="imgTagTo" src="https://countryflagsapi.com/png/ae" alt="United Arab Emirates flag"/>
+                <select (change)="onChangeSelectTo($event)" id='corrency__slect-to' class="corrency__slect-to">
+                  <option  [selected]="item.ccy == 'UAH'" *ngFor="let item of list">
+                    {{ item.ccy }}
+                  </option>
+                </select>
+            </div>
+            <input [(ngModel)]="valueTo" (input)="onChangeInputTo($event)" id='corrency__input-to' class="corrency__input-to" type="number"/>
+        </div>
+    </div>
+  </div>

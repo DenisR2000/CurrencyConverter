@@ -1,4 +1,6 @@
-export let currency_list = [
+import {Country} from './Country'
+
+export const COUNTRIES: Country[] = [
     { ccy: "AED", tag: "AE" },
     { ccy: "AFN", tag: "AF" },
     { ccy: "XCD", tag: "AG" },
