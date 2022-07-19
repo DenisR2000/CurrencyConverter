@@ -26,6 +26,27 @@ export class CurrencyApiService {
   
   }
 
+  async getTotalExchangeRate(inputFromVal : number, ccyFrom: string, ccyTo: string): Promise<String> {
+    try {
+      let url = `https://v6.exchangerate-api.com/v6/${this.apiKey}/latest/${ccyFrom}`
+      const response = await fetch(url)
+      if(response.ok === true) {
+        const data = await response.json();
+        var exchangeRate = data.conversion_rates[ccyTo]
+      } else {
+        return ''
+      }
+    } catch(err) { 
+      console.log(err);
+    } finally {
+      return new Promise<String>((resolve, reject) => {
+        let totalExchangeRate = (inputFromVal * exchangeRate).toFixed(2)
+        resolve(totalExchangeRate)
+      });
+    }
+  }
+
+
   async getReversTotalExchangeRate(inputTo : number, ccyFrom: string, ccyTo: string): Promise<String> {
     try {
       let url = `https://v6.exchangerate-api.com/v6/${this.apiKey}/latest/${ccyFrom}`

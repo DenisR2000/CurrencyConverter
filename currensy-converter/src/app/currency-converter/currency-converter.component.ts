@@ -68,39 +68,40 @@ export class CurrencyConverterComponent implements OnInit {
     }
   }
 
-  calculateRevers(inputTo: number): void {
+  calculateRevers(inputToVal: number): void {
     this.valueFrom = Number('')
     let ccyTo: string;
     if(this.ccyFrom == undefined) this.ccyFrom ="UAH" 
     if(this.ccyTo === undefined) this.ccyTo ="USH" 
     if(this.ccyTo != undefined) ccyTo = this.ccyTo
-    if(inputTo != null && inputTo > 0) {
-      var promise = this.currencyApiService.getReversTotalExchangeRate(inputTo, this.ccyFrom, this.ccyTo)
-      promise.then(valueFrom => {
-        this.valueFrom = Number(valueFrom);
-      }).catch(err => {
-        console.log(err);
-      });
-    } else if( inputTo == 0) {
+    if(inputToVal != null && inputToVal > 0) {
+      this.currencyApiService
+        .getReversTotalExchangeRate(inputToVal, this.ccyFrom, this.ccyTo)
+          .then(valueFrom => {
+            this.valueFrom = Number(valueFrom);
+          }).catch(err => {
+            console.log(err);
+          });
+    } else if( inputToVal == 0) {
       this.valueTo = Number('')
     }
   }
 
-  calculate(vinputFromVal: number = this.valueFrom): void {
+  calculate(inputFromVal: number = this.valueFrom): void {
     this.valueTo = Number('')
     let ccyTo: string;
     if(this.ccyFrom == undefined) this.ccyFrom ="USD" 
     if(this.ccyTo === undefined) this.ccyTo ="UAH" 
     if(this.ccyTo != undefined) ccyTo = this.ccyTo
-    if(vinputFromVal != null && vinputFromVal > 0) {
-      let apiKey = 'cd2e9f6609cf7eda5f0d283c'
-      let url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${this.ccyFrom}`
-      fetch(url).then(response => response.json()).then(result => {
-          let exchangeRate = result.conversion_rates[ccyTo]
-          let totalExchangeRate = (vinputFromVal * exchangeRate).toFixed(2)
-          this.valueTo = Number(totalExchangeRate)
-      })
-    } else if( vinputFromVal == 0) {
+    if(inputFromVal != null && inputFromVal > 0) {
+      this.currencyApiService
+        .getTotalExchangeRate(inputFromVal, this.ccyFrom, this.ccyTo)
+          .then(valueTo => {
+            this.valueTo = Number(valueTo);
+          }).catch(err => {
+            console.log(err);
+          });
+    } else if( inputFromVal == 0) {
       this.valueTo = Number('')
     }
   }
